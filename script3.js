@@ -1,19 +1,24 @@
-addEventListener() 
-{
-    // при прокрутке содержимого страницы
-    window.addEventListener('scroll', () => {
-      // определяем величину прокрутки
-      const scrollY = window.scrollY || document.documentElement.scrollTop;
-      // если страница прокручена больше чем на 400px, то делаем кнопку видимой, иначе скрываем
-      scrollY > 400 ? this.show() : this.hide();
-    });
-    // при нажатии на кнопку .btn-up
-    document.querySelector('.button_cont').onclick = () => {
-      // переместим в начало страницы
-      window.scrollTo({
-        top: 0,
-        left: 0,
-        behavior: 'smooth'
-      });
-    }
+// Smooth scrolling to the target section with adjustable speed
+function scrollToSection(event) {
+  event.preventDefault(); // Prevent default behavior of anchor click
+  const targetId = event.currentTarget.getAttribute("href"); // Get the target section ID from href attribute
+  const targetSection = document.querySelector(targetId); // Find the target section element
+  if (targetSection) {
+      const targetPosition = targetSection.offsetTop; // Get the target section's position relative to the top of the page
+    
+      const scrollOptions = {
+          top: targetPosition,
+          behavior: "smooth" // Set the smooth scrolling behavior
+      };
+
+      // Adjust the scroll speed (change the value of `scrollTimingFunction`)
+      // Available values: "linear", "ease", "ease-in", "ease-out", "ease-in-out"
+      scrollOptions.scrollTimingFunction = "ease-in-out";
+
+      window.scrollTo(scrollOptions);
+  }
 }
+
+// Attach scrollToSection function to the anchor click event
+const buttonCont = document.querySelector(".button_cont");
+buttonCont.addEventListener("click", scrollToSection);
